@@ -1,3 +1,5 @@
 added requirements here
 1. Install Android Studio
 2. Language Required : Kotlin, XML
+
+Got it!!! Enjoy

@@ -1,27 +1,25 @@
 package com.example.diceroller
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageView
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.diceroller.databinding.ActivityMainBinding
+import java.util.*
+
 /**
  * This activity allows the user to roll a dice and view the result
  * on the screen.
  */
 class MainActivity : AppCompatActivity() {
+    private val TAG = "MAIN_TAG"
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val rollButton: Button = findViewById(R.id.button)
-        rollButton.setOnClickListener {
-            val resultImageView: ImageView = findViewById(R.id.imageView)
-            rollButton.setOnClickListener { rollDice() }
-        }
-    }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-    class Dice(val numSides: Int) {
-        fun roll(): Int {
-            return (1..numSides).random()
+        binding.btnRoll.setOnClickListener {
+            rollDice()
         }
     }
 
@@ -29,16 +27,15 @@ class MainActivity : AppCompatActivity() {
      * Roll the dice and update the screen with the result.
      */
     private fun rollDice() {
-        val dice = Dice(6)
-        val diceRoll = dice.roll()
-        val diceImage: ImageView = findViewById(R.id.imageView)
-        when (diceRoll) {
-            1 -> diceImage.setImageResource(R.drawable.dice_1)
-            2 -> diceImage.setImageResource(R.drawable.dice_2)
-            3 -> diceImage.setImageResource(R.drawable.dice_3)
-            4 -> diceImage.setImageResource(R.drawable.dice_4)
-            5 -> diceImage.setImageResource(R.drawable.dice_5)
-            6 -> diceImage.setImageResource(R.drawable.dice_6)
+        val selectImage = when (Random().nextInt(6) + 1) {
+            1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
+            3 -> R.drawable.dice_3
+            4 -> R.drawable.dice_4
+            5 -> R.drawable.dice_5
+            else -> R.drawable.dice_6
         }
+        Log.d(TAG, "rollDice: Button Clicked")
+        binding.ivDice.setImageResource(selectImage)
     }
 }
